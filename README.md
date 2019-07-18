@@ -6,7 +6,7 @@ How to run:
 1. Install Roll Master Retail System
 2. Install AutohotKey
 3. Run AuditBot.ahk via AutohotKey 
-
+========================================
 	TODO
 1. window response tester		???
 2. window display tester		???
