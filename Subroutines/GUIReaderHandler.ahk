@@ -1,7 +1,7 @@
 ;description
 
-#include Subroutines\GUILayouts.hk
-#include Subroutines\WindowResponseHandler.hk
+#include Subroutines\GUILayouts.ahk
+#include Subroutines\WindowResponseHandler.ahk
 	
 GUIReader() {
 	Logger("GUIHandler", "has been called.")

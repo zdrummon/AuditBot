@@ -1,6 +1,6 @@
 ;create graphical user interface
 
-#include Subroutines\AuditAnalyticHandler.hk
+#include Subroutines\AuditAnalyticHandler.ahk
 
 AuditBotGUI() {
 	global

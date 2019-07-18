@@ -1,10 +1,10 @@
 ;complete the audit
 
-#include Subroutines\NoteHandler.hk
-#include Subroutines\ShipToHandler.hk
-#include Subroutines\JobDetailHandler.hk
-#include Subroutines\GUIReaderHandler.hk
-#include Subroutines\WORHandler.hk
+#include Subroutines\NoteHandler.ahk
+#include Subroutines\ShipToHandler.ahk
+#include Subroutines\JobDetailHandler.ahk
+#include Subroutines\GUIReaderHandler.ahk
+#include Subroutines\WORHandler.ahk
 
 Audit(AuditType) {
 	CoordMode, Mouse, Window

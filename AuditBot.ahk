@@ -22,10 +22,7 @@ AuditBotGUI()
 	AuditBotGUI()
 return
 
-#Include Subroutines\TestHandler.hk
-#Include Subroutines\RouteHandler.hk
-#Include Subroutines\LogHandler.hk
-#include Subroutines\GUIHandler.hk
-
-
-
+#Include Subroutines\TestHandler.ahk
+#Include Subroutines\RouteHandler.ahk
+#Include Subroutines\LogHandler.ahk
+#include Subroutines\GUIHandler.ahk

@@ -1,8 +1,8 @@
 ;target rollmaster
 
-#Include Subroutines\AuditHandler.hk
-#Include Subroutines\OrderHandler.hk
-#Include Subroutines\RMHandler.hk
+#Include Subroutines\AuditHandler.ahk
+#Include Subroutines\OrderHandler.ahk
+#Include Subroutines\RMHandler.ahk
 
 AuditRoute(AuditType) {
 	RMActive := WinActive("Order Maintenance")

@@ -1,6 +1,6 @@
 ;add date and initials to the building line
 
-#include Subroutines\ETAHandler.hk
+#include Subroutines\ETAHandler.ahk
 
 updateBuilding(AuditType) {
 	;click ship to
