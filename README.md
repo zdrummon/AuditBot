@@ -1,4 +1,3 @@
-========================================
  AuditBot  - 2019 - (Experimental) 	 
  Zachary Drummond - zdrummon@gmail.com) 
 ========================================
