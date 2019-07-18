@@ -1,16 +1,12 @@
- AuditBot  - 2019 - (Experimental) 	 
- Zachary Drummond - zdrummon@gmail.com) 
-<br>
-===========================
-<br>
-How to run:
+### AuditBot  - 2019 - (Experimental) 	 
+### Zachary Drummond - zdrummon@gmail.com) 
+
+## How to run:
 1. Install Roll Master Retail System
 2. Install AutohotKey
 3. Run AuditBot.ahk via AutohotKey 
-<br>
-===========================
-<br>
-	TODO
+
+## TODO
 1. window response tester		???
 2. window display tester		???
 3. next transfer calculator	    DONE
