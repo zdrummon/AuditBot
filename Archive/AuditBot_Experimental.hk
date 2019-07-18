@@ -1,0 +1,42 @@
+;========================================;
+; AuditBot  - 2019 - (Experimental) 	 ;
+; Zachary Drummond - zdrummon@gmail.com) ;
+;========================================;
+
+;	TODO
+;1. window response tester		???
+;2. window display tester		???
+;3. next transfer calculator	DONE
+;4. start audit
+;5. pdf opener
+;6. start rollmaster
+;7. handle floorwizard
+;8. build debug handler			???
+;9. modularization				DONE
+;10. python rewrite
+
+OutputDebug, AuditBot 2019
+OutputDebug, Zachary Drummond zdrummon@gmail.com
+OutputDebug, "ctrl + alt + (l, t, o)"
+OutputDebug, "test mode: ctrl + alt + q"
+
+#Include Subroutines\RouteHandler.hk
+#Include Subroutines\LogHandler.hk
+#Include Subroutines\ExperimentHandler.hk
+
+;press ctrl + alt + (l, t, o) to route the bot
+
+^!l::
+	Logger("local audit" , "activated")
+	AuditRoute("local")
+return
+
+^!t::
+	Logger("transfer audit" , "activated")
+	AuditRoute("transfer")
+return
+
+^!o::
+	Logger("order audit" , "activated")
+	AuditRoute("order")
+return

@@ -1,0 +1,13 @@
+;ctrl + alt + t to run test mode
+
+global TestMode := false
+
+^!q::
+	if (TestMode = false) {
+		TestMode := true
+		Logger("test mode" , "activated")
+	} else {
+		TestMode := false
+		Logger("test mode" , "deactivated")
+	}
+return

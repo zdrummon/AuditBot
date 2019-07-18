@@ -1,0 +1,37 @@
+;while (!ProgramResponding) {
+;Sleep, 100
+;}
+; /*
+;  * SendMessageTimeout values
+; 
+; #define SMTO_NORMAL         0x0000
+; #define SMTO_BLOCK          0x0001
+; #define SMTO_ABORTIFHUNG    0x0002
+; #if(WINVER >= 0x0500)
+; #define SMTO_NOTIMEOUTIFNOTHUNG 0x0008
+; #endif /* WINVER >= 0x0500 */
+; #endif /* !NONCMESSAGES */
+; 
+; 
+; SendMessageTimeout(
+;     __in HWND hWnd,
+;     __in UINT Msg,
+;     __in WPARAM wParam,
+;     __in LPARAM lParam,
+;     __in UINT fuFlags,
+;     __in UINT uTimeout,
+;     __out_opt PDWORD_PTR lpdwResult);
+;     */
+; WM_NULL =0x0000
+; SMTO_ABORTIFHUNG =0x0002
+
+
+NR_temp =0
+TimeOut = 100
+WinGet, wid, ID, Order Maintenance
+Responding := DllCall("SendMessageTimeout", "UInt", wid, "UInt", 0x0000, "Int", 0, "Int", 0, "UInt", 0x0002, "UInt", TimeOut, "UInt *", NR_temp)
+If (Responding = 1) {
+  Msgbox, Responding
+} Else {
+  Msgbox, Not Responding
+}

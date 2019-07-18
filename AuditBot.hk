@@ -1,0 +1,54 @@
+;========================================;
+; AuditBot  - 2019 - (Experimental) 	 ;
+; Zachary Drummond - zdrummon@gmail.com) ;
+;========================================;
+
+;	TODO
+;1. window response tester		???
+;2. window display tester		???
+;3. next transfer calculator	DONE
+;4. start audit
+;5. pdf opener					???
+;6. start rollmaster
+;7. handle floorwizard
+;8. build debug handler			???
+;9. modularization				DONE
+;10. python rewrite
+;11. gui						DONE
+;12. tast checklist				DONE
+;13. WOR button					DONE
+;14. audit analytics			DONE
+;15. sub-tasks
+;16. task sequencer
+;17. RollMaster parser
+;18. IFTTT vs AHK?
+;l9. active window retargeting
+;20. automation escape
+;21. fix auditbot cancel WOR
+
+global Version := "0.0.0.6"
+global TestMode := false
+global AuditCount := 0
+global WORNote := "WOR"
+
+OutputDebug, %A_ScriptName%: /=============================\
+OutputDebug, %A_ScriptName%: | AuditBot %Version%            |
+OutputDebug, %A_ScriptName%: | by Zachary Drummond (2019)  |
+OutputDebug, %A_ScriptName%: | email: zdrummon@gmail.com   |
+OutputDebug, %A_ScriptName%: | show: ctrl + alt + a        |
+OutputDebug, %A_ScriptName%: | test: ctrl + alt + t        |
+OutputDebug, %A_ScriptName%: \=============================/
+
+AuditBotGUI()
+
+^!a::
+	AuditBotGUI()
+return
+
+#Include Subroutines\TestHandler.hk
+#Include Subroutines\RouteHandler.hk
+#Include Subroutines\LogHandler.hk
+#include Subroutines\GUIHandler.hk
+
+
+

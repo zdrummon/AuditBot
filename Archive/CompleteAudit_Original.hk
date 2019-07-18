@@ -1,0 +1,31 @@
+;Finish audits
+
+;-------------ctrl + alt + o----------order material
+^!o::
+	CoordMode, Mouse, Screen
+	Sleep, 1000
+	Click, 654, 230
+	Sleep, 1000
+	Send AUDITED
+	Sleep, 1000
+	Click, 1418, 471
+	Sleep, 1000
+	Click, 1420, 809
+	Sleep, 1000
+	Click, 413, 774
+	Sleep, 1000
+	Click, 1029, 443
+	Sleep, 1000
+	Send 05/13 ZD
+	Sleep, 1000
+	Click, 926, 790
+	Sleep, 1000
+	Click, 590, 506
+	Sleep, 1000
+	Click, 375, 536
+	Sleep, 1000
+	Click, 356, 605
+	Sleep, 1000
+	Click, 1765, 126
+return
+

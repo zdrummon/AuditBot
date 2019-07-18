@@ -1,0 +1,161 @@
+;press ctrl + alt + (l, t, o) -------------- finish audit
+^!l::
+	AuditRoute("local")
+return	
+^!t::
+	AuditRoute("transfer")
+return
+^!o::
+	AuditRoute("order")
+return
+
+;target rollmaster
+AuditRoute(AuditType) {
+	RMActive := WinActive("Order Maintenance")
+	OrderOpen := WinExist("Order Maintenance")
+	RMOpen := WinExist("ahk_class AcucobolWClass")
+
+	if (RMActive) {
+		Audit(AuditType)
+
+	} else if (OrderOpen) {
+		WinActivate, ahk_class AcucobolWClass 
+		Audit(AuditType)
+
+	} else if (RMOpen) {
+		OpenOrder()
+	
+	} else {
+		OpenRollMaster()
+	}
+}
+
+;complete the audit
+Audit(AuditType) {
+	CoordMode, Mouse, Window
+
+	updateNotes()
+	updateBuilding(AuditType)
+	updateStatus(AuditType)
+
+	;close order
+	Sleep, 1000
+	Click, 1250, 10
+
+	MsgBox % AuditType . " audit completed"
+}
+
+;add AUDITED to the order notes
+updateNotes() {
+	;click notes
+	Sleep, 1000
+	Click, 350, 100
+
+	;type AUDITED
+	Sleep, 1000
+	Send AUDITED
+
+	;click save	
+	Sleep, 1000
+	Click, 780, 230
+	
+	;click exit
+	Sleep, 1000
+	Click, 780, 500
+}
+
+;add date and initials to the building line
+updateBuilding(AuditType) {
+	;click ship to
+	Sleep, 1000
+	Click, 190, 320
+
+	;click change location
+	Sleep, 1000
+	Click, 175, 530
+	
+	;click on building line and select all
+	Sleep, 1000
+	Click, 125, 135
+	Send, ^a
+
+	;type date and initials
+	if (AuditType = "local" or AuditType = "order") {
+		Send % A_MM . "/" . A_DD . " ZD"
+
+	} else {
+		NextTransfer := NextTransferCalculator()
+		Send % "ETA " . NextTransfer . " ZD"	
+	}
+
+	;click save
+	Sleep, 1000
+	Click, 110, 410
+}
+
+;update and change the job status
+updateStatus(AuditType) {
+	;click job detail
+	Sleep, 1000
+	Click, 300, 320
+
+	;click job status
+	Sleep, 1000
+	Click, 310, 350
+
+	;set job status
+	Sleep, 1000
+	if(AuditType = "local" or AuditType = "transfer") {
+		Click, 255, 440
+
+	} else {
+		Click, 255, 400	
+	}
+}
+
+;calculate next transfer ETA
+NextTransferCalculator() {
+
+	;find next transfer
+	FormatTime, DayOfWeek, , WDay	
+	OffsetETA := 1
+	if (DayOfWeek = 1 or DayOfWeek = 3 or DayOfWeek = 5) {
+		OffsetETA := 2	
+	} else if (DayOfWeek = 6) {
+		OffsetETA := 3
+	}
+
+	;find current days in the month
+	if (A_MM = "01" or A_MM = "03" or A_MM = "05" or A_MM = "07" or A_MM = "08" or A_MM = "10" or A_MM = "12") {
+		DaysInMonth := 31
+	} else if (A_MM = "04" or A_MM = "06" or A_MM = "09" or A_MM = "11") {
+		DaysInMonth := 30
+	} else if (A_MM = "02" and Mod(A_YYYY, 100) = 1) {
+		DaysInMonth := 29
+	} else {
+		DaysInMonth := 28
+	}
+	
+	;calculate ETA
+	if (A_DD + OffsetETA > DaysInMonth) {
+		ETADay := A_DD + OffsetETA - DaysInMonth
+		ETAMonth := A_MM + 1
+	} else {
+		ETADay := A_DD + OffsetETA
+		ETAMonth := A_MM
+	}
+	
+	;format and return ETA
+	NextTransfer := ETAMonth . "/" . ETADay
+	return NextTransfer
+}
+
+;asks you to open an order
+OpenOrder() {
+	MsgBox You need to open an order.
+}
+
+;opens rollmaster
+OpenRollMaster() {
+	MsgBox You need to open RollMaster.
+}

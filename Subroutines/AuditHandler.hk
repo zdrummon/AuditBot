@@ -1,0 +1,28 @@
+;complete the audit
+
+#include Subroutines\NoteHandler.hk
+#include Subroutines\ShipToHandler.hk
+#include Subroutines\JobDetailHandler.hk
+#include Subroutines\GUIReaderHandler.hk
+#include Subroutines\WORHandler.hk
+
+Audit(AuditType) {
+	CoordMode, Mouse, Window
+	
+	if (AuditType = "WOR") {
+		updateNotesWOR()
+		updateBuilding(AuditType)
+	} else {
+		updateNotes()
+		updateBuilding(AuditType)
+		updateStatus(AuditType)
+	}
+	
+	;close order
+	Logger("closing", "order")
+	Sleep, 1000
+	Click, 1250, 10
+
+	Logger(AuditType, "audit complete")
+	MsgBox % AuditType . " audit completed"
+}

@@ -1,0 +1,36 @@
+
+
+;check for when foxit is opened
+
+
+
+
+
+
+Running := true
+
+
+while (Running) {
+	OutputDebug, TESTINGZRD: checking for edocs
+	Loop, Files, C:\Acuthin\TMS-TEMP.* 
+	{
+		if (A_LoopFileName != "") {
+			File := A_LoopFileName	
+			FilePath := "C:\Acuthin\"
+			NewFilePath := "C:\Acuthin\edocs\"
+			OutputDebug, TESTINGZRD: %FilePath%%File% is being moved to %NewFilePath%%File%
+			FileMove, %FilePath%%File%, %NewFilePath%%File%, 1		
+		}
+	}
+	sleep, 1000
+}
+
+
+;			Dest := C:\Acuthin\
+;			TempFileTarget := "" . %A_LoopFileName%
+;			OutputDebug, TESTINGZRD: %TempFileTarget%
+;			TempNewFileTarget := "C:\Acuthin\edocs\" . %A_LoopFileName%
+;			OutputDebug, TESTINGZRD: %TempFileTarget% . " to " . %TempNewFileTarget% 
+;			FileMove, TempFileTarget, TempNewFileTarget, 1
+
+

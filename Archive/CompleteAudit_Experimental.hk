@@ -1,0 +1,252 @@
+;TODO
+;1. window response tester	???
+;2. window display tester	???
+;3. next transfer calculator	DONE
+;4. start audit
+;5. pdf opener
+;6. start rollmaster
+;7. handle floorwizard
+;8. build debug handler
+;9. optimize (arrays! (objects), #include modularization)
+;10. python rewrite?
+
+;#Include Subroutines\Experiments.hk
+#Include Subroutines\LogHandler.hk
+
+;press ctrl + alt + (l, t, o) -------------- finish audit
+^!l::
+	AuditRoute("local")
+return	
+^!t::
+	AuditRoute("transfer")
+return
+^!o::
+	AuditRoute("order")
+return
+
+;target rollmaster
+AuditRoute(AuditType) {
+	OutputDebug, ------- run start -------
+	RMActive := WinActive("Order Maintenance")
+	OrderOpen := WinExist("Order Maintenance")
+	RMOpen := WinExist("ahk_class AcucobolWClass")
+
+	if (RMActive) {
+		Audit(AuditType)
+
+	} else if (OrderOpen) {
+		WinActivate, ahk_class AcucobolWClass 
+		Audit(AuditType)
+
+	} else if (RMOpen) {
+		OpenOrder()
+	
+	} else {
+		OpenRollMaster()
+	}
+}
+
+;complete the audit
+Audit(AuditType) {
+	CoordMode, Mouse, Window
+
+;	updateNotes()
+;	updateBuilding(AuditType)
+;	updateStatus(AuditType)
+
+	;close order
+	WaitForWindowResponse("Order Maintenance")
+;	Click, 1250, 10
+
+	OutputDebug, ------- run complete -------
+	MsgBox % AuditType . " audit completed"
+}
+
+;add AUDITED to the order notes
+updateNotes() {
+	Sleep, 1000
+
+	;click notes
+	WaitForWindowResponse("Order Maintenance")
+	Click, 350, 100
+
+	;type AUDITED
+	WaitForWindowResponse("Notes")
+;	Send AUDITED
+
+	;click save	
+	WaitForWindowResponse("Notes")
+;	Click, 780, 230
+	
+	;click exit
+	WaitForWindowResponse("Notes")
+	Click, 780, 500
+}
+
+;add date and initials to the building line
+updateBuilding(AuditType) {
+	Sleep, 1000
+
+	;click ship to
+	WaitForWindowResponse("Order Maintenance")
+	Click, 190, 320
+
+	;click change location
+	WaitForWindowResponse("Order Maintenance")
+	Click, 175, 530
+	
+	;click on building line and select all
+	WaitForWindowResponse("Order Maintenance")
+	Click, 125, 135
+	Send, ^a
+
+	;type date and initials
+	if (AuditType = "local" or AuditType = "order") {
+		Send % A_MM . "/" . A_DD . " ZD"
+
+	} else {
+		NextTransfer := NextTransferCalculator()
+		Send % "ETA " . NextTransfer . " ZD"	
+	}
+
+	;click save
+	WaitForWindowResponse("Order Maintenance")
+	Click, 110, 410
+}
+
+;update and change the job status
+updateStatus(AuditType) {
+	Sleep, 1000
+
+	;click job detail
+	WaitForWindowResponse("Order Maintenance")
+	Click, 300, 320
+
+	;click job status
+	WaitForWindowResponse("Order Maintenance")
+	Click, 310, 350
+
+	;set job status
+	WaitForWindowResponse("Order Maintenance")
+	if(AuditType = "local" or AuditType = "transfer") {
+		Click, 255, 440
+
+	} else {
+		Click, 255, 400	
+	}
+}
+
+;calculate next transfer ETA
+NextTransferCalculator() {
+
+	;find next transfer
+	FormatTime, DayOfWeek, , WDay	
+	OffsetETA := 1
+	if (DayOfWeek = 1 or DayOfWeek = 3 or DayOfWeek = 5) {
+		OffsetETA := 2	
+	} else if (DayOfWeek = 6) {
+		OffsetETA := 3
+	}
+
+	;find current days in the month
+	if (A_MM = "01" or A_MM = "03" or A_MM = "05" or A_MM = "07" or A_MM = "08" or A_MM = "10" or A_MM = "12") {
+		DaysInMonth := 31
+	} else if (A_MM = "04" or A_MM = "06" or A_MM = "09" or A_MM = "11") {
+		DaysInMonth := 30
+	} else if (A_MM = "02" and Mod(A_YYYY, 100) = 1) {
+		DaysInMonth := 29
+	} else {
+		DaysInMonth := 28
+	}
+	
+	;calculate ETA
+	if (A_DD + OffsetETA > DaysInMonth) {
+		ETADay := A_DD + OffsetETA - DaysInMonth
+		ETAMonth := A_MM + 1
+	} else {
+		ETADay := A_DD + OffsetETA
+		ETAMonth := A_MM
+	}
+	
+	;format and return ETA
+	NextTransfer := ETAMonth . "/" . ETADay
+	return NextTransfer
+}
+
+;asks you to open an order
+OpenOrder() {
+	MsgBox You need to open an order.
+}
+
+;opens rollmaster
+OpenRollMaster() {
+	MsgBox You need to open RollMaster.
+}
+
+;tests for window response
+WaitForWindowResponse(ResponseTarget) {
+	Responding := 0
+	ResponseAttempt := 0
+	while (Responding = 0) {
+		Sleep, 200
+		NR_temp = 0
+		TimeOut = 100
+		WinGet, wid, ID, %ResponseTarget%
+		Responding := DllCall("SendMessageTimeout", "UInt", wid, "UInt", 0x0000, "Int", 0, "Int", 0, "UInt", 0x0002, "UInt", TimeOut, "UInt *", NR_temp)
+		ResponseAttempt := ResponseAttempt + 1
+		OutputDebug, % "Ping " . ResponseTarget . " attempt " . ResponseAttempt		
+	}
+	OutputDebug, % ResponseTarget . " response success"
+	GUITest(ResponseTarget)
+}
+
+;tests the GUI to see if components are visible
+GUITest(ResponseTarget) {
+	OutputDebug, % "Testing GUI of " . ResponseTarget
+	If (ResponseTarget = "Notes") {
+		FirstPixel = 0xFEFFFE
+		FirstPixelX = 7
+		FirstPixelY = 260
+
+		SecondPixel = 0xFFFFFF
+		SecondPixelX = 18
+		SecondPixelY = 265
+
+		ThirdPixel = 0xEEE1D4
+		ThirdPixelX = 836
+		ThirdPixelY = 165
+
+		DisplayReady := false
+		While (!DisplayReady) {
+			Sleep, 200
+			PixelGetColor, CurrentPixel, FirstPixelX, FirstPixelY
+			Logger(CurrentPixel, " testing")
+			if (CurrentPixel = FirstPixel) {
+				Logger(CurrentPixel, " matches")
+				PixelGetColor, CurrentPixel, SecondPixelX, SecondPixelY
+				Logger(CurrentPixel, " testing")
+				if (CurrentPixel = SecondPixel) {
+					Logger(CurrentPixel, " matches")
+					PixelGetColor, CurrentPixel, ThirdPixelX, ThirdPixelY
+					Logger(CurrentPixel, " testing")
+					if (CurrentPixel = ThirdPixel) {
+						Logger(CurrentPixel, " matches")
+						DisplayReady = true
+					} else {
+						Logger(CurrentPixel, " failed")
+					}
+				} else {
+					Logger(CurrentPixel, "failed")
+				}
+			} else {
+				Logger(CurrentPixel, "failed")
+			}	
+		}
+	}
+}
+
+;	DisplayTable := []
+;	display | # | color | x | y
+;	notes, 1, 0xFEFFEE, 7, 260
+;	notes, 2, 0xFFFFFF, 18, 265
+;	notes, 3, 0xEEE1D4, 836, 165
