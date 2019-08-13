@@ -24,20 +24,12 @@ Audit(AuditType) {
 	if (AuditType = "TestButton") {
 		
 	} else {
-   		NN := "Static3"
-    	ControlGetText, OrderNumber, %NN%
-    	TrimmedOrderNumber = %OrderNumber%
-
-		NN := "msctls_statusbar321"
-		ControlGetText, BranchInitial, %NN%
-    	TrimmedBranchInitial = %BranchInitial%
-
 		;close order
 		Logger("closing", "order")
 		Sleep, 1000
 		Click, 1250, 10
 
-		Logger(AuditType, "audit " . TrimmedBranchInitial . "-" . TrimmedOrderNumber . " complete")
+		Logger(AuditType, "audit complete")
 		MsgBox % AuditType . " audit completed"
 	}
 }
