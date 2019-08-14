@@ -25,11 +25,10 @@ Audit(AuditType) {
 		
 	} else {
 		;close order
+		Logger(AuditType, "audit complete")
+		MsgBox % AuditType . " audit completed"
 		Logger("closing", "order")
 		Sleep, 1000
 		Click, 1250, 10
-
-		Logger(AuditType, "audit complete")
-		MsgBox % AuditType . " audit completed"
 	}
 }
