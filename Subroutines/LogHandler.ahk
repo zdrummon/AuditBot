@@ -12,7 +12,7 @@ Logger(LogTarget, LogCode) {
 	TrimmedBranchInitial := SubStr(TrimmedBranchInitial, 4, 2)
 
 	BranchOrder := TrimmedBranchInitial . "-" . TrimmedOrderNumber
-	LogItem := % A_ScriptName . ": " . BranchOrder . " " . LogTarget . " " . LogCode
+	LogItem := % A_ScriptName . ": [" A_Hour . ":" . A_Min . "] " . BranchOrder . " " . LogTarget . " " . LogCode
 
 	if (TestMode = true) {
 		OutputDebug, % A_ScriptName . "(test): " . BranchOrder . " " . LogTarget . " " . LogCode

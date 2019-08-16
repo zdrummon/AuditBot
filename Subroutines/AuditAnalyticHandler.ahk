@@ -2,5 +2,5 @@
 
 DailyTally() {
 	AuditCount := AuditCount + 1
-	Logger("Audit number", AuditCount . " for " . A_MM . "/" . A_DD)
+	Logger("audit number", AuditCount . " for " . A_MM . "/" . A_DD)
 }
