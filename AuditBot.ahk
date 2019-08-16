@@ -3,7 +3,7 @@
 ; Zachary Drummond - zdrummon@gmail.com) ;
 ;========================================;
 
-global Version := "0.0.0.6"
+global Version := "0.0.0.7"
 global TestMode := false
 global AuditCount := 0
 global WORNote := "WOR"
