@@ -12,10 +12,13 @@ Logger(LogTarget, LogCode) {
 	TrimmedBranchInitial := SubStr(TrimmedBranchInitial, 4, 2)
 
 	BranchOrder := TrimmedBranchInitial . "-" . TrimmedOrderNumber
+	LogItem := % A_ScriptName . ": " . BranchOrder . " " . LogTarget . " " . LogCode
 
 	if (TestMode = true) {
 		OutputDebug, % A_ScriptName . "(test): " . BranchOrder . " " . LogTarget . " " . LogCode
 	} else {
-		OutputDebug, % A_ScriptName . ": " . BranchOrder . " " . LogTarget . " " . LogCode
+		OutputDebug, %LogItem%
+		DailyLogName := A_MM . "-" . A_DD . "-" . A_YYYY . " audit log"
+		FileAppend, `n %LogItem%, C:\Zachary's Experiments\AuditBot\Logs\%DailyLogName%.txt
 	}
 }

@@ -1,7 +1,5 @@
 ;create graphical user interface
 
-#include Subroutines\AuditAnalyticHandler.ahk
-
 AuditBotGUI() {
 	global
 	SysGet, Mon, MonitorWorkArea, 1
@@ -39,7 +37,6 @@ AuditBotGUI() {
 		if (NotesRead = 1 and CustomerAgreementAudited = 1 and DiagramAudited = 1 and FloorWizardAudited = 1 and TransitionsAudited = 1 and LineCommentsAudited = 1 and MaterialsAssigned = 1) {
 			Logger("local", "audit activated")
 			AuditRoute("local")
-			DailyTally()
 			GuiControl, , NotesRead, 0
 			GuiControl, , CustomerAgreementAudited, 0
 			GuiControl, , DiagramAudited, 0
@@ -58,7 +55,6 @@ AuditBotGUI() {
 		if (NotesRead = 1 and CustomerAgreementAudited = 1 and DiagramAudited = 1 and FloorWizardAudited = 1 and TransitionsAudited = 1 and LineCommentsAudited = 1 and MaterialsAssigned = 1) {
 			Logger("transfer", "audit activated")
 			AuditRoute("transfer")
-			DailyTally()
 			GuiControl, , NotesRead, 0
 			GuiControl, , CustomerAgreementAudited, 0
 			GuiControl, , DiagramAudited, 0
@@ -77,7 +73,6 @@ AuditBotGUI() {
 		if (NotesRead = 1 and CustomerAgreementAudited = 1 and DiagramAudited = 1 and FloorWizardAudited = 1 and TransitionsAudited = 1 and LineCommentsAudited = 1 and MaterialsAssigned = 1) {
 			Logger("order", "audit activated")
 			AuditRoute("order")	
-			DailyTally()
 			GuiControl, , NotesRead, 0
 			GuiControl, , CustomerAgreementAudited, 0
 			GuiControl, , DiagramAudited, 0
@@ -95,7 +90,6 @@ AuditBotGUI() {
 		Gui, Submit, NoHide
 		Logger("WOR", "audit activated")
 		AuditRoute("WOR")	
-		DailyTally()
 		GuiControl, , NotesRead, 0
 		GuiControl, , CustomerAgreementAudited, 0
 		GuiControl, , DiagramAudited, 0

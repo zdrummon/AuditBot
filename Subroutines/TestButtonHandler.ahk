@@ -8,6 +8,9 @@ activateTestButton() {
 	NN := "msctls_statusbar321"
 	ControlGetText, BranchInitial, %NN%
     TrimmedBranchInitial = %BranchInitial%
-    
-	Logger(AuditType, "audit " . TrimmedBranchInitial . "-" . TrimmedOrderNumber . " complete")
+	TrimmedBranchInitial := SubStr(TrimmedBranchInitial, 4, 2)
+
+	BranchOrder := TrimmedBranchInitial . "-" . TrimmedOrderNumber
+
+	Logger(AuditType, "audit " . BranchOrder . " complete")
 }
