@@ -6,6 +6,7 @@
 global Version := "0.0.0.7"
 global TestMode := false
 global AuditCount := 0
+global LastAuditDay := 0 
 global WORNote := "WOR"
 
 OutputDebug, %A_ScriptName%: /=============================\
