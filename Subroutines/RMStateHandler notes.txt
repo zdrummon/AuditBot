@@ -1,0 +1,55 @@
+job inquiry screen
+x2646, y28 to close
+
+
+ROLL MASTER STATE HIERARCHY
+
+roll master open
+	roll master software sales processing
+		order maintenance
+			line items
+			install dates
+				***todo
+			notes
+			ship to
+				change location
+			job detail
+				job status
+			job inquiry screen
+
+
+StateManager (RMState) {
+	Cancel()
+	SetActive(RMState)
+}
+
+
+;RMState list---
+;closed
+;login*
+;sales processing
+;line items-ship to
+;line items-job detail
+;install dates
+;notes
+;change location
+;job status
+;job inquiry screen
+;edocs1
+;edocs2
+
+
+
+
+	if (rollmasteractive = true)
+		if (rollmastersalesprocessing = true)
+			if (ordermaintenance = true)
+				if (line items = true)
+				else if (lineitems = true)
+				else if (installdates = true)
+				else if (notes = true)
+				else if (jobinquiry = true)
+				else if (shipto = true)
+					else if (changelocation = true)
+				else if (jobdetail = true)
+					else if (jobstatus = true)
