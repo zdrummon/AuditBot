@@ -15,5 +15,6 @@ global RMState := "closed"
 RMStateManager (RMState) {
 	RMStateActivate(RMState)
 	RMStatePoll(RMState)
+	RMStateLog(RMState)
 	MacroPause()
 }

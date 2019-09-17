@@ -43,5 +43,7 @@ Audit(AuditType) {
 		Sleep, 1000
 		Click, 1250, 10
 		MsgBox % AuditType . " audit " . BranchOrder . " completed"
+		OutputDebug, AuditBot.ahk: ====================================================================================================
+		FileAppend, `n ====================================================================================================, %DailyLogName%
 	}
 }

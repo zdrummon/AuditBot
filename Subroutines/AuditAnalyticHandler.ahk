@@ -6,7 +6,7 @@ DailyTally() {
 		AuditCount := AuditCount + 1
 	} else if (LastAuditDay == 0) {
 		Logger("first audit","since restart")
-		AuditCount := 1
+		AuditCount := AuditCount + 1
 		LastAuditDay := A_DD
 	} else {
 		Logger("last audit was completed previously on the", LastAuditDay)

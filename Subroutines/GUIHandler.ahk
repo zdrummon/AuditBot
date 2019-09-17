@@ -17,8 +17,8 @@ AuditBotGUI() {
 	Gui, Add, Checkbox, x10 y195 w120 h20 vCustomerAgreementAudited, Customer Agreement
 	Gui, Add, Checkbox, x10 y215 w120 h20 vLineCommentsAudited, Line Comments
 	Gui, Add, Checkbox, x10 y235 w120 h20 vFloorWizardAudited, Charges
-	Gui, Add, Checkbox, x10 y255 w120 h20 vTransitionsAudited, Transitions	
-	Gui, Add, Checkbox, x10 y275 w120 h20 vMiscAudited, Adhes + Demo
+	Gui, Add, Checkbox, x10 y255 w120 h20 vMiscAudited, Adhes + Demo
+	Gui, Add, Checkbox, x10 y275 w120 h20 vTransitionsAudited, Transitions	
 	Gui, Add, Checkbox, x10 y295 w120 h20 vMaterialsAssigned, Materials Assigned
 	Gui, Add, Button, default x0 y320 w75 h32 gButtonLocalAudit, &Local audit
 	Gui, Add, Button, default x75 y320 w75 h32 gButtonTransferAudit, &Transfer audit
