@@ -17,7 +17,8 @@ Logger(LogTarget, LogCode) {
 	if (TestMode = true) {
 		OutputDebug, % A_ScriptName . "(test): " . BranchOrder . " " . LogTarget . " " . LogCode
 	} else {
+		DailyLogName := "C:\Zachary's Experiments\AuditBot\Logs\" . A_MM . "-" . A_DD . "-" . A_YYYY . " audit log.txt"
 		OutputDebug, %LogItem%
-		FileAppend, `n %LogItem%, %DailyLogName%
+		FileAppend, `n%LogItem%, %DailyLogName%
 	}
 }

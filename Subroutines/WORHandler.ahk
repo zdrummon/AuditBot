@@ -8,6 +8,8 @@ getWORNote() {
 updateNotesWOR() {
 
 	getWORNote()
+
+	WinActivate, ahk_class AcucobolWClass 
 	
 	;click notes
 	Logger("clicking", "notes")
