@@ -2,8 +2,6 @@
 
 activateTestButton() {
 
-	WinActivate, ahk_class MozillaWindowClass 
-
     NN := "Static3"
     ControlGetText, OrderNumber, %NN%
     TrimmedOrderNumber = %OrderNumber%
@@ -14,6 +12,17 @@ activateTestButton() {
 	TrimmedBranchInitial := SubStr(TrimmedBranchInitial, 4, 2)
 
 	BranchOrder := TrimmedBranchInitial . "-" . TrimmedOrderNumber
+
+	NN := "ComboBox2"
+	ControlGetText, SalesRep, %NN%
+	SalesRep := SubStr(SalesRep, 5)
+	RepEmail := StrReplace(SalesRep, A_Space) . "@sgcarpet.com"
+
+	InputBox, WOREmail, WOREmail, Good day %SalesRep%`,`n`nI have some questions about this order. ENTER TEXT HERE. Please advise.
+	WORNote := WOREmail
+	WOREmail := "Good day " . SalesRep . ",`n`nI have some questions about this order. " . WOREmail . ". Please advise."
+
+	WinActivate, ahk_class MozillaWindowClass 
 
 	;click firefox tab
 	Logger("clicking", "outlook")
@@ -30,15 +39,15 @@ activateTestButton() {
 	Sleep, 1000
 	Click, 700, 210
 
-	;type NIC
-	Logger("typing", "nickratajczak@sgcarpet.com")
+	;type my email
+	Logger("typing", "zacharydrummond@sgcarpet.com")
 	Sleep, 1000
-	Send nickratajczak@sgcarpet.com
+	Send zacharydrummond@sgcarpet.com
 	Sleep, 1000
 	Send {Enter}
 
-	;click nicholas
-	Logger("clicking", "nicholas")
+	;click zachary
+	Logger("clicking", "zachary")
 	Sleep, 1000
 	;Click, 700, 255
 
@@ -47,15 +56,25 @@ activateTestButton() {
 	Sleep, 1000
 	Click, 600, 320
 
-	;type I MADE A BUTTON THAT SENDS YOU EMAILS
-	Logger("typing", "I MADE A BUTTON THAT SENDS YOU EMAILS")
+	;type subject line
+	Logger("typing", "AUDIT " . BranchOrder)
 	Sleep, 1000
-	Send I MADE A BUTTON THAT SENDS YOU EMAILS
+	Send AUDIT %BranchOrder%
+
+	;type clicking email body
+	Logger("clicking", "email body")
+	Sleep, 1000
+	Click, 605, 375
+
+	;type reps name
+	Logger("typing", "reps name")
+	Sleep, 1000
+	Send %RepEmail% %WOREmail%
 
 	;click send
 	Logger("clicking", "send")
 	Sleep, 1000
-	;Click, 605, 700
+	Click, 605, 700
 
 	Logger(AuditType, "audit " . BranchOrder . " complete")
 }

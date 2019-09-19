@@ -1,13 +1,12 @@
 ;parse and fulfill audits that need correction
 
-getWORNote() {
-	InputBox, WORNote, WOR Note, Please enter the note
-	WORNote := "WOR - " . WORNote
-}
+#include Subroutines\WOREmailHandler.ahk
 
 updateNotesWOR() {
 
-	getWORNote()
+	SendEmail()
+
+	WORNote := "WOR - " . WORNote
 
 	WinActivate, ahk_class AcucobolWClass 
 	
