@@ -12,11 +12,22 @@ SendEmail() {
 	NN := "ComboBox2"
 	ControlGetText, SalesRep, %NN%
 	SalesRep := SubStr(SalesRep, 5)
+    StringLower, SalesRep, SalesRep, T
 	RepEmail := StrReplace(SalesRep, A_Space) . "@sgcarpet.com"
 
-	InputBox, WOREmail, WOREmail, Good day %SalesRep%`,`n`nI have some questions about this order.`n`nENTER TEXT HERE.`n`nPlease advise.
+    GreetingTime := "day"
+
+    if (A_HH < 12) {
+        GreetingTime := "morning"
+    } else if (A_HH > 12 && A_HH < 16) {
+        GreetingTime := "afternoon"
+    } else {
+        GreetingTime := "evening"
+    }
+
+	InputBox, WOREmail, Send email describing error, Good %GreetingTime% %SalesRep%`,`nI have some questions about this order. Please advise.`n(please type full sentences)
 	global WORNote := WOREmail
-	WOREmail := "Good day " . SalesRep . ",`n`nI have some questions about this order. " . WOREmail . " Please advise."
+	WOREmail := "Good " . GreetingTime . " " . SalesRep . ",`n`nI have some questions about this order. " . WOREmail . " Please advise."
 
 	WinActivate, ahk_class MozillaWindowClass 
 
@@ -84,9 +95,9 @@ SendEmail() {
 	Click, 700, 210
 
 	;type my email
-	Logger("typing", "zacharydrummond@sgcarpet.com")
+	Logger("typing", RepEmail)
 	Sleep, 1000
-	Send zacharydrummond@sgcarpet.com
+	Send %RepEmail%
 	Sleep, 1000
 	Send {Enter}
 
@@ -138,7 +149,7 @@ SendEmail() {
 	;type reps name
 	Logger("typing", "reps name")
 	Sleep, 1000
-	Send %RepEmail% %WOREmail%
+	Send %WOREmail%
 
 	;click send
 	Logger("clicking", "send")
