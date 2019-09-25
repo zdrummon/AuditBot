@@ -2,11 +2,11 @@ SendEmail() {
     
     NN := "Static3"
     ControlGetText, OrderNumber, %NN%
+    OrderNumber := SubStr(OrderNumber, 1, 6)
 
 	NN := "msctls_statusbar321"
 	ControlGetText, BranchInitial, %NN%
 	BranchInitial := SubStr(BranchInitial, 4, 2)
-
 	BranchOrder := BranchInitial . "-" . OrderNumber
 
 	NN := "ComboBox2"
@@ -17,17 +17,17 @@ SendEmail() {
 
     GreetingTime := "day"
 
-    if (A_HH < 12) {
+    if (A_Hour < 12) {
         GreetingTime := "morning"
-    } else if (A_HH > 12 && A_HH < 16) {
+    } else if (A_Hour > 12 && A_Hour < 16) {
         GreetingTime := "afternoon"
     } else {
         GreetingTime := "evening"
     }
 
-	InputBox, WOREmail, Send email describing error, Good %GreetingTime% %SalesRep%`,`nI have some questions about this order. Please advise.`n(please type full sentences)
+	InputBox, WOREmail, Send email describing error, Good %GreetingTime% %SalesRep%`,`nI have some concerns about this order. Please advise.`n(please type full sentences)
 	global WORNote := WOREmail
-	WOREmail := "Good " . GreetingTime . " " . SalesRep . ",`n`nI have some questions about this order. " . WOREmail . " Please advise."
+	WOREmail := "Good " . GreetingTime . " " . SalesRep . ",`n`nI have some concerns about this order. " . WOREmail . " Please advise."
 
 	WinActivate, ahk_class MozillaWindowClass 
 
@@ -80,9 +80,9 @@ SendEmail() {
     }
 
 	;click firefox tab
-	Logger("clicking", "outlook")
+	Logger("typing", "ctrl + 1 to open outlook tab")
 	Sleep, 1000
-	Click, 20, 20
+	Send {CtrlDown}1{CtrlUp}
 
 	;click new message
 	Logger("clicking", "new message")
@@ -96,65 +96,47 @@ SendEmail() {
 
 	;type my email
 	Logger("typing", RepEmail)
-	Sleep, 1000
 	Send %RepEmail%
-	Sleep, 1000
 	Send {Enter}
 
-	;click CC
-	Logger("clicking", "CC")
-	Sleep, 1000
-	Click, 670, 260
+	;tabbing to CC
+	Logger("tabbing to", "CC")
+	Send {tab}{tab}{tab}
 
-    ;CCs here
     ;type nick and scheduling email
 	Logger("typing", "nicks email and schedulings email")
-	Sleep, 1000
 	Send nickratajczak@sgcarpet.com 
-    Sleep, 1000
    	Send {Enter}
     Send scheduling@sgcarpet.com 
-    Sleep, 1000
 	Send {Enter}
 
     ;type managers email 1
 	Logger("typing", "managers email")
-	Sleep, 1000
 	Send %BranchManagerEmail1%
-	Sleep, 1000
 	Send {Enter}
 
     ;type managers email 2
 	Logger("typing", "managers email")
-	Sleep, 1000
 	Send %BranchManagerEmail2%
-	Sleep, 1000
 	Send {Enter}
 
-	;click subject line
-	Logger("clicking", "subject line")
-	Sleep, 1000
-	Click, 600, 320
+	;tabbing to subject line
+	Logger("tabbing to", "subject line")
+	Send {tab}
 
 	;type subject line
 	Logger("typing", "AUDIT " . BranchOrder)
-	Sleep, 1000
 	Send AUDIT %BranchOrder%
 
-	;type clicking email body
-	Logger("clicking", "email body")
-	Sleep, 1000
-	Click, 605, 375
+	;tabbing to email body
+	Logger("tabbing to", "email body")
+	Send {tab}
 
 	;type reps name
 	Logger("typing", "reps name")
-	Sleep, 1000
 	Send %WOREmail%
 
-	;click send
-	Logger("clicking", "send")
-	Sleep, 1000
-	Click, 605, 700
-
-	Logger(AuditType, "audit " . BranchOrder . " complete")
+	;tabbing to send and pressing enter
+	Logger("tabbing to", "send and pressing enter")
+	Send {tab}{tab}{enter}
 }

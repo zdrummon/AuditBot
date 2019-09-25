@@ -37,6 +37,11 @@ FileAppend, `n==================================================================
 	AuditBotGUI()
 return
 
+^!Esc::
+	Logger("script","killed")
+	Reload
+return
+
 #Include Subroutines\TestHandler.ahk
 #Include Subroutines\RouteHandler.ahk
 #Include Subroutines\LogHandler.ahk
