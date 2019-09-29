@@ -97,7 +97,7 @@ SendEmail() {
 	;type my email
 	Logger("typing", RepEmail)
 	Send %RepEmail%
-    Sleep, 400
+    Sleep, 550
 	Send {Enter}
 
 	;tabbing to CC
@@ -107,22 +107,22 @@ SendEmail() {
     ;type nick and scheduling email
 	Logger("typing", "nicks email and schedulings email")
 	Send nickratajczak@sgcarpet.com 
-    Sleep, 400
+    Sleep, 550
    	Send {Enter}
     Send scheduling@sgcarpet.com 
-    Sleep, 400
+    Sleep, 550
 	Send {Enter}
 
     ;type managers email 1
 	Logger("typing", "managers email")
 	Send %BranchManagerEmail1%
-    Sleep, 400
+    Sleep, 550
 	Send {Enter}
 
     ;type managers email 2
 	Logger("typing", "managers email")
 	Send %BranchManagerEmail2%
-    Sleep, 400
+    Sleep, 550
 	Send {Enter}
 
 	;tabbing to subject line
@@ -136,12 +136,12 @@ SendEmail() {
 	;tabbing to email body
 	Logger("tabbing to", "email body")
 	Send {tab}
-    Sleep, 400
+    Sleep, 550
 
 	;type reps name
 	Logger("typing", "reps name")
 	Send %WOREmail%
-    Sleep, 400
+    Sleep, 550
 
 	;tabbing to send and pressing enter
 	Logger("tabbing to", "send and pressing enter")
