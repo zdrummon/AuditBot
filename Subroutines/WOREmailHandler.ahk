@@ -32,9 +32,9 @@ SendEmail() {
     }
 
     RepName1 := SubStr(SalesRep1, 1, InStr(SalesRep1, " ") - 1)
-	InputBox, WOREmail, Send email describing error, Good %GreetingTime% %SalesRep1%`,`nThis order needs a bit more attention. Please advise.`n(please type full sentences)
+	InputBox, WOREmail, Send email describing error, Good %GreetingTime% %RepName1%`,`nThis order needs a bit more attention. Please advise and thank you`, %RepName1%.`n(please type full sentences)
 	global WORNote := WOREmail
-	WOREmail := "Good " . GreetingTime . " " . RepName1 . ",`n`nThis order needs a bit more attention. " . WOREmail . " Please advise and thanks " . RepName1 . "."
+	WOREmail := "Good " . GreetingTime . " " . RepName1 . ",`n`nThis order needs a bit more attention. " . WOREmail . " Please advise and thank you, " . RepName1 . "."
 
 	WinActivate, ahk_class MozillaWindowClass 
 
@@ -120,11 +120,14 @@ SendEmail() {
     Sleep, 550
 
     ;type rep2 email
-	Logger("typing", RepEmail2)
-	Send %RepEmail2%
-    Sleep, 800
-	Send {Enter}
-    Sleep, 550
+    if (RepEmail2 not "NotMeasured@sgcarpet.com") 
+    {
+	    Logger("typing", RepEmail2)
+	    Send %RepEmail2%
+        Sleep, 800
+	    Send {Enter}
+        Sleep, 550
+    }
 
     ;type nick and scheduling email
 	Logger("typing", "nicks email and schedulings email")
@@ -140,21 +143,21 @@ SendEmail() {
     ;type managers email 1
 	Logger("typing", "managers email")
 	Send %BranchManagerEmail1%
-    Sleep, 550
+    Sleep, 800
 	Send {Enter}
-    Sleep, 550
+    Sleep, 800
 
     ;type managers email 2
 	Logger("typing", "managers email")
 	Send %BranchManagerEmail2%
-    Sleep, 550
+    Sleep, 800
 	Send {Enter}
-    Sleep, 550
+    Sleep, 800
 
 	;tabbing to subject line
 	Logger("tabbing to", "subject line")
 	Send {tab}
-    Sleep, 550
+    Sleep, 800
 
 	;type subject line
 	Logger("typing", "AUDIT " . BranchOrder)

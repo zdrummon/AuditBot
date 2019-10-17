@@ -21,7 +21,6 @@ activateTestButton() {
 	ControlGetText, LineItemList, %NN%
 
 	WinActivate, ahk_class Notepad
-
 	;type reps name
 	Logger("typing", "line items")
 	Sleep, 1000
