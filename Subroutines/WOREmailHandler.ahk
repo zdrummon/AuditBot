@@ -78,12 +78,18 @@ SendEmail() {
         ;WE HAVE A BRANCH ERROR
     }
  
-    if (RepEmail1 == "NULLTEST") {
-        RepEmail1 := "NULLTEST@sgcarpet.com"
-    } else if (RepEmail1 == "NULLTEST2") {
-        RepEmail1 := "NULLTEST@sgcarpet.com"
-    } else {
-        ;EMAIL IS FINE
+    ;repemail1 exceptions
+    if (RepEmail1 == "AliciaMarieGonzales@sgcarpet.com") {
+        RepEmail1 := "AliciaG-onzales@sgcarpet.com"
+    } else if (RepEmail1 == "JeffLaferriere@sgcarpet.com") {
+        RepEmail1 := "JefferyLaferriere@sgcarpet.com"
+    }
+
+    ;repemail2 exceptions
+    if (RepEmail2 == "AliciaMarieGonzales@sgcarpet.com") {
+        RepEmail2 := "AliciaG-onzales@sgcarpet.com"
+    } else if (RepEmail2 == "JeffLaferriere@sgcarpet.com") {
+        RepEmail2 := "JefferyLaferriere@sgcarpet.com"
     }
 
 	;click firefox tab

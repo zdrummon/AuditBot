@@ -3,7 +3,7 @@
 ; Zachary Drummond - zdrummon@gmail.com) ;
 ;========================================;
 
-global Version := "0.0.0.8"
+global Version := "0.0.0.9"
 global TestMode := false
 global DailyLogName := "C:\Zachary's Experiments\AuditBot\Logs\" . A_MM . "-" . A_DD . "-" . A_YYYY . " audit log.txt"
 global AuditCount := 0

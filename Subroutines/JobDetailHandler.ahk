@@ -3,6 +3,10 @@
 #include Subroutines\JobInquiryKiller.ahk
 
 updateStatus(AuditType) {
+
+	Sleep, 1000
+	KillJIS()
+
 	;click job detail
 	Logger("clicking", "job detail")
 	Sleep, 1000

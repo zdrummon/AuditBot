@@ -41,5 +41,6 @@ updateBuilding(AuditType) {
 	Logger("clicking", "save")
 	Sleep, 1000
 	Click, 110, 410
+	Sleep, 1000
 	KillJIS()
 }
