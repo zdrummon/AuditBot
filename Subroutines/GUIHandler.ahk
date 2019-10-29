@@ -15,7 +15,7 @@ AuditBotGUI() {
 	Gui, Add, Checkbox, Check3 x10 y155 w100 h20 vNotesRead, Notes
 	Gui, Add, Checkbox, Check3 x10 y175 w100 h20 vDiagramAudited, Diagram
 	Gui, Add, Checkbox, Check3 x10 y195 w120 h20 vCustomerAgreementAudited, Customer Agreement
-	Gui, Add, Checkbox, Check3 x10 y215 w120 h20 vLineCommentsAudited, Line Comments
+	Gui, Add, Checkbox, Check3 x10 y215 w120 h20 vLineCommentsAudited, Labor Lines
 	Gui, Add, Checkbox, Check3 x10 y235 w120 h20 vFloorWizardAudited, Charges
 	Gui, Add, Checkbox, Check3 x10 y255 w120 h20 vMiscAudited, Adhes + Demo
 	Gui, Add, Checkbox, Check3 x10 y275 w120 h20 vTransitionsAudited, Transitions	

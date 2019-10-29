@@ -14,12 +14,29 @@ SendEmail() {
 	SalesRep1 := SubStr(SalesRep1, 5)
     StringLower, SalesRep1, SalesRep1, T
 	RepEmail1 := StrReplace(SalesRep1, A_Space) . "@sgcarpet.com"
+    RepName1 := SubStr(SalesRep1, 1, InStr(SalesRep1, " ") - 1)
 
     NN := "ComboBox3"
 	ControlGetText, SalesRep2, %NN%
 	SalesRep2 := SubStr(SalesRep2, 5)
     StringLower, SalesRep2, SalesRep2, T
 	RepEmail2 := StrReplace(SalesRep2, A_Space) . "@sgcarpet.com"
+
+	NN := "Static40"
+	ControlGetText, CustName, %NN%
+	CustLastName := SubStr(CustName, 1, InStr(CustName, " "))
+	CustLastName := SubStr(CustLastName, 1, InStr(CustLastName, ",") - 1)
+	CustFirstName := SubStr(CustName, InStr(CustName, " ", false, , 1) + 1, InStr(CustName, " ", false, , 2) - 1) . " "
+	CustFirstName := SubStr(CustFirstName, 1, InStr(CustFirstName, " ") - 1)
+	StringLower, CustLastName, CustLastName, T
+	StringLower, CustFirstName, CustFirstName, T
+    ;needs to add plurals to customer/customers
+    ;uncapitalize the word And
+    ;customer name splitting with /
+
+    NN := "Edit1"
+	ControlGetText, ProjNum, %NN%
+    ProjNum := "(PROJECT " . ProjNum . ")"
 
     GreetingTime := "day"
 
@@ -31,10 +48,21 @@ SendEmail() {
         GreetingTime := "evening"
     }
 
-    RepName1 := SubStr(SalesRep1, 1, InStr(SalesRep1, " ") - 1)
 	InputBox, WOREmail, Send email describing error, Good %GreetingTime% %RepName1%`,`nThis order needs a bit more attention. Please advise and thank you`, %RepName1%.`n(please type full sentences)
 	global WORNote := WOREmail
-	WOREmail := "Good " . GreetingTime . " " . RepName1 . ",`n`nThis order needs a bit more attention. " . WOREmail . " Please advise and thank you, " . RepName1 . "."
+	WOREmail := "Good " 
+        . GreetingTime 
+        . " " 
+        . RepName1 
+        . ",`n`nThis order for your customer "
+        . CustFirstName
+        . " "
+        . CustLastName
+        . " needs a bit more attention. " 
+        . WOREmail 
+        . " Please advise and thank you, " 
+        . RepName1 
+        . ".`n`n(Please use reply all when responding to this email)"
 
 	WinActivate, ahk_class MozillaWindowClass 
 
@@ -61,7 +89,7 @@ SendEmail() {
         BranchManagerEmail2 := "christinaratajczak@sgcarpet.com"
     } else if (BranchInitial == "RK") {
         BranchManagerEmail1 := "damonthompson@sgcarpet.com"
-        BranchManagerEmail2 := ""
+        BranchManagerEmail2 := "shannonjorzig@sgcarpet.com"
     } else if (BranchInitial == "EG") {
         BranchManagerEmail1 := "robertjennings@sgcarpet.com"
         BranchManagerEmail2 := "mattaxford@sgcarpet.com"
@@ -74,8 +102,6 @@ SendEmail() {
     } else if (BranchInitial == "CC") {
         BranchManagerEmail1 := "sergiocortes@sgcarpet.com"
         BranchManagerEmail2 := ""
-    } else {
-        ;WE HAVE A BRANCH ERROR
     }
  
     ;repemail1 exceptions
@@ -125,15 +151,22 @@ SendEmail() {
     Send {tab}
     Sleep, 550
 
-    ;type rep2 email
-    if (RepEmail2 not "NotMeasured@sgcarpet.com") 
-    {
+    if (RepEmail2 = "*@sgcarpet.com")
+	{
+		Logger("no second rep", "selected")
+	}
+	else if (RepEmail2 = "NotMeasured@sgcarpet.com")
+	{
+		Logger("no second rep", "selected")
+	}
+	else
+	{
 	    Logger("typing", RepEmail2)
 	    Send %RepEmail2%
         Sleep, 800
 	    Send {Enter}
         Sleep, 550
-    }
+	}
 
     ;type nick and scheduling email
 	Logger("typing", "nicks email and schedulings email")
@@ -154,11 +187,14 @@ SendEmail() {
     Sleep, 800
 
     ;type managers email 2
-	Logger("typing", "managers email")
-	Send %BranchManagerEmail2%
-    Sleep, 800
-	Send {Enter}
-    Sleep, 800
+    if (BranchManagerEmail2 != "")
+    {
+	    Logger("typing", "managers email")
+	    Send %BranchManagerEmail2%
+        Sleep, 800
+	    Send {Enter}
+        Sleep, 800
+    }
 
 	;tabbing to subject line
 	Logger("tabbing to", "subject line")
@@ -166,8 +202,8 @@ SendEmail() {
     Sleep, 800
 
 	;type subject line
-	Logger("typing", "AUDIT " . BranchOrder)
-	Send AUDIT %BranchOrder%
+	Logger("typing", "AUDIT " . BranchOrder . " project: " . ProjNum)
+	Send AUDIT %BranchOrder% %ProjNum%
     Sleep, 550
 
 	;tabbing to email body
