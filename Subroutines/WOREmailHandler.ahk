@@ -24,6 +24,10 @@ SendEmail() {
 
 	NN := "Static40"
 	ControlGetText, CustName, %NN%
+    if (InStr(CustName, " ,"))
+    {
+        CustName := StrReplace(CustName, " ,", ",")
+    }
 	CustLastName := SubStr(CustName, 1, InStr(CustName, " "))
 	CustLastName := SubStr(CustLastName, 1, InStr(CustLastName, ",") - 1)
 	CustFirstName := SubStr(CustName, InStr(CustName, " ", false, , 1) + 1, InStr(CustName, " ", false, , 2) - 1) . " "
@@ -39,10 +43,9 @@ SendEmail() {
     ProjNum := "(PROJECT " . ProjNum . ")"
 
     GreetingTime := "day"
-
-    if (A_Hour < 12) {
+	if (A_Hour < 12) {
         GreetingTime := "morning"
-    } else if (A_Hour >= 12 && A_Hour =< 16) {
+    } else if (A_Hour < 17) {
         GreetingTime := "afternoon"
     } else {
         GreetingTime := "evening"
@@ -109,6 +112,8 @@ SendEmail() {
         RepEmail1 := "AliciaG-onzales@sgcarpet.com"
     } else if (RepEmail1 == "JeffLaferriere@sgcarpet.com") {
         RepEmail1 := "JefferyLaferriere@sgcarpet.com"
+    } else if (RepEmail1 == "JeffMoran@sgcarpet.com") {
+        RepEmail1 := "JeffreyMoran@sgcarpet.com"
     }
 
     ;repemail2 exceptions
@@ -116,6 +121,8 @@ SendEmail() {
         RepEmail2 := "AliciaG-onzales@sgcarpet.com"
     } else if (RepEmail2 == "JeffLaferriere@sgcarpet.com") {
         RepEmail2 := "JefferyLaferriere@sgcarpet.com"
+    } else if (RepEmail2 == "JeffMoran@sgcarpet.com") {
+        RepEmail2 := "JeffreyMoran@sgcarpet.com"
     }
 
 	;click firefox tab
