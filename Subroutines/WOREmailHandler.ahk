@@ -40,7 +40,9 @@ SendEmail() {
 
     NN := "Edit1"
 	ControlGetText, ProjNum, %NN%
-    ProjNum := "(PROJECT " . ProjNum . ")"
+    if (ProjNum != "") {
+        ProjNum := "(PROJECT " . ProjNum . ")"
+    }
 
     GreetingTime := "day"
 	if (A_Hour < 12) {
@@ -114,6 +116,8 @@ SendEmail() {
         RepEmail1 := "JefferyLaferriere@sgcarpet.com"
     } else if (RepEmail1 == "JeffMoran@sgcarpet.com") {
         RepEmail1 := "JeffreyMoran@sgcarpet.com"
+    } else if (RepEmail1 == "AlexanderSchneeberg@sgcarpet.com") {
+        RepEmail1 := "AlexSchneeberg@sgcarpet.com"
     }
 
     ;repemail2 exceptions
@@ -123,6 +127,8 @@ SendEmail() {
         RepEmail2 := "JefferyLaferriere@sgcarpet.com"
     } else if (RepEmail2 == "JeffMoran@sgcarpet.com") {
         RepEmail2 := "JeffreyMoran@sgcarpet.com"
+    } else if (RepEmail2 == "AlexanderSchneeberg@sgcarpet.com") {
+        RepEmail2 := "AlexSchneeberg@sgcarpet.com"
     }
 
 	;click firefox tab

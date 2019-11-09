@@ -21,6 +21,28 @@ Audit(AuditType) {
 	TrimmedBranchInitial := SubStr(TrimmedBranchInitial, 4, 2)
 
 	BranchOrder := TrimmedBranchInitial . "-" . TrimmedOrderNumber
+
+	NN := "Static40"
+	ControlGetText, CustName, %NN%
+    if (InStr(CustName, " ,"))
+    {
+        CustName := StrReplace(CustName, " ,", ",")
+    }
+	CustLastName := SubStr(CustName, 1, InStr(CustName, " "))
+	CustLastName := SubStr(CustLastName, 1, InStr(CustLastName, ",") - 1)
+	CustFirstName := SubStr(CustName, InStr(CustName, " ", false, , 1) + 1, InStr(CustName, " ", false, , 2) - 1) . " "
+	CustFirstName := SubStr(CustFirstName, 1, InStr(CustFirstName, " ") - 1)
+	StringLower, CustLastName, CustLastName, T
+	StringLower, CustFirstName, CustFirstName, T
+	CustName := CustFirstName + CustLastName
+
+	NN := "Edit1"
+	ControlGetText, ProjNum, %NN%
+	if (ProjNum != "") {
+        ProjNum := "(PROJECT " . ProjNum . ")"
+    }
+
+	Logger("customer " . CustName, ProjNum)
 	
 	if (AuditType = "WOR") {
 		updateNotesWOR()
