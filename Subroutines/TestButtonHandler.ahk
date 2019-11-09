@@ -13,6 +13,27 @@ activateTestButton() {
 
 	WinActivate, ahk_class Order Maintenance
 
+	NN := "Static40"
+	ControlGetText, CustName, %NN%
+    if (InStr(CustName, " ,"))
+    {
+        CustName := StrReplace(CustName, " ,", ",")
+    }
+	CustLastName := SubStr(CustName, 1, InStr(CustName, " "))
+	CustLastName := SubStr(CustLastName, 1, InStr(CustLastName, ",") - 1)
+	CustFirstName := SubStr(CustName, InStr(CustName, " ", false, , 1) + 1, InStr(CustName, " ", false, , 2) - 1) . " "
+	CustFirstName := SubStr(CustFirstName, 1, InStr(CustFirstName, " ") - 1)
+	StringLower, CustLastName, CustLastName, T
+	StringLower, CustFirstName, CustFirstName, T
+
+	NN := "Edit1"
+	ControlGetText, ProjNum, %NN%
+	if (ProjNum != "") {
+        ProjNum := "(PROJECT " . ProjNum . ")"
+    }
+
+	Logger("customer " . CustFirstName . " " . CustLastName, ProjNum)
+
 	NN := "ListBox1"
 	ControlGet, LineItemList, List, , %NN%
 	LineItemList := StrReplace(LineItemList, "  ", "")

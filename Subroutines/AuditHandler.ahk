@@ -42,7 +42,7 @@ Audit(AuditType) {
         ProjNum := "(PROJECT " . ProjNum . ")"
     }
 
-	Logger("customer " . CustName, ProjNum)
+	Logger(ProjNum, "customer " . CustFirstName . " " . CustLastName)
 	
 	if (AuditType = "WOR") {
 		updateNotesWOR()
